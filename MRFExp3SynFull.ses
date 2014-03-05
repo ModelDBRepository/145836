@@ -1,0 +1,61 @@
+{load_file("nrngui.hoc")}
+objectvar save_window_, rvp_
+objectvar scene_vector_[3]
+objectvar ocbox_, ocbox_list_, scene_, scene_list_
+{ocbox_list_ = new List()  scene_list_ = new List()}
+{pwman_place(0,0,0)}
+
+//Begin MulRunFitter[0]
+{
+load_file("mulfit.hoc", "MulRunFitter")
+}
+{
+ocbox_ = new MulRunFitter(1)
+}
+{object_push(ocbox_)}
+{
+version(6)
+ranfac = 2
+fspec = new File("MRFExp3SynFull.ses.ft1")
+fdat = new File("MRFExp3SynFull.ses.fd1")
+read_data()
+build()
+}
+opt.set_optimizer("MulfitPraxWrap")
+{object_push(opt.optimizer)}
+{
+nstep = 0
+}
+{object_pop()}
+{p.gengui(0, 298, 332, 939.84, 333.12)}
+{p.showargs(1013, 61, 242.88, 193.92)}
+{optrestore(772, 61, 225.6, 234.24)}
+{object_pop()}
+{
+ocbox_.map("MulRunFitter[0]", 387, 61, 363.84, 187.2)
+}
+objref ocbox_
+//End MulRunFitter[0]
+
+{
+xpanel("data weights", 0)
+RegionFitness[0].scale = 1
+xvalue("Total weight (scale)","RegionFitness[0].scale", 1,"sprint(scalelabel, \"scale=%g \", scale)", 0, 1 )
+Vector[15].x[0] = 0
+xvalue("interval 1 startpoint","Vector[15].x[0]", 1,"set_w()", 0, 1 )
+Vector[15].x[1] = 499.652
+xvalue("interval 1 endpoint","Vector[15].x[1]", 1,"set_w()", 0, 1 )
+Vector[14].x[1] = 1
+xvalue("interval 1 weight","Vector[14].x[1]", 1,"set_w()", 0, 1 )
+Vector[15].x[2] = 623.581
+xvalue("interval 2 endpoint","Vector[15].x[2]", 1,"set_w()", 0, 1 )
+Vector[14].x[2] = 1e-06
+xvalue("interval 2 weight","Vector[14].x[2]", 1,"set_w()", 0, 1 )
+Vector[15].x[3] = 1114.17
+xvalue("interval 3 endpoint","Vector[15].x[3]", 1,"set_w()", 0, 1 )
+Vector[14].x[3] = 1
+xvalue("interval 3 weight","Vector[14].x[3]", 1,"set_w()", 0, 1 )
+xpanel(0,130)
+}
+objectvar scene_vector_[1]
+{doNotify()}

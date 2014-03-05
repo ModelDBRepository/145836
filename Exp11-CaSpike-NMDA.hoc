@@ -1,0 +1,98 @@
+/* In this experiment we want to fit our model to recorded NMDA current
+during oscilating patterns of membrane voltage which include some action potentials
+*/
+load_file("nrngui.hoc")
+load_file("params.hoc")
+
+//fully activates cache efficiency
+cvode.cache_efficient(1)  
+
+tstop = 40.5348
+dt = .025
+celsius = 18
+v_init = -65
+
+// ------------------
+create soma
+access soma
+
+// load data
+//------------Action Potential Clamp---------------------------	
+objref vc, vRec, tRec, vFile, tFile
+
+vRec = new Vector(440)
+tRec = new Vector(440)
+vFile = new File()
+tFile = new File()
+
+vFile.ropen("./Data/Exp10-Clarke08-Fig10/vCaSpike.dat")
+tFile.ropen("./Data/Exp10-Clarke08-Fig10/tCaSpike.dat")
+vRec.scanf(vFile)
+tRec.scanf(tFile)
+
+// vRec.printf()
+
+vc = new VClamp(.5)
+	vc.dur[0] = tstop
+	vRec.play(&vc.amp[0],tRec)
+	
+//---------------------------------------------------
+objref sNMDA, stim, nc
+//{sNMDA = new NMDA10_1(.5) SynWeight = 0.39071} // Kampa et al, 2004 model
+//{sNMDA = new NMDA10_2_2(.5) SynWeight = 0.49707} // Vargas-Caballero & Robinson, 2004 model
+{sNMDA = new NMDA16_2(.5) SynWeight = 0.056526} // Clarke & Johnson, 2008
+
+stim = new NetStim(.5)
+	stim.interval = 1		//ms (mean) time between spikes
+	stim.number = 1			//(average) number of spikes
+	stim.start 	= 1.53427 - 1	//ms (most likely) start time of first spike
+	stim.noise 	= 0			//---- range 0 to 1. Fractional randomness.
+	//0 deterministic, 1 intervals have negexp distribution.
+
+nc = new NetCon(stim, sNMDA)
+
+proc init_NMDA() {
+	nc.weight = SynWeight
+	nc.delay = 1
+}
+objref FinNMDA
+FinNMDA = new FInitializeHandler(3,"init_NMDA()")
+	
+//-------Graph----------------------	
+objref iNMDA, vSoma
+iNMDA = new Graph()
+iNMDA.size(0,tstop,-10,5)
+iNMDA.addvar("sNMDA.i",3,0)
+iNMDA.save_name("graphList[0].")
+graphList[0].append(iNMDA)
+
+vSoma = new Graph()
+vSoma.size(0,tstop,-100,50)
+vSoma.addvar("soma.v(.5)",3,0)
+vSoma.save_name("graphList[0].")
+graphList[0].append(vSoma)
+
+//------Save Simulated NMDA Current
+objref iNMDA, iFile, time, tFile
+iNMDA = new Vector()
+iNMDA.record(&sNMDA.i)
+iFile = new File("iFile.dat")
+iFile.wopen("iFile.dat")
+
+time = new Vector()
+time.record(&t)
+tFile = new File("tFile.dat")
+tFile.wopen("tFile.dat")
+
+init()
+run()
+
+iNMDA.printf(iFile)
+iFile.close()
+
+time.printf(tFile)
+tFile.close()
+
+// load MultiRunFitter
+//load_file("MRF-Ca-AP.ses")
+//load_file("MRF-Ca-AP2.ses")

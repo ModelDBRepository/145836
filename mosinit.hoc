@@ -1,0 +1,3 @@
+load_file("nrngui.hoc")
+load_file("Exp01-Exp2NMDA-Fitting.hoc")
+

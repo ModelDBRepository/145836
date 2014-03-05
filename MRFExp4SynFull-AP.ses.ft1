@@ -1,0 +1,16 @@
+ParmFitness: Unnamed multiple run protocol
+	FitnessGenerator: MRF
+		RegionFitness:	sNMDA.i
+
+	Parameters:
+		"SynWeight", 0.546091, 1e-09, 1e+09, 1, 1
+		"A2", 2.99069, 1e-09, 1e+09, 1, 1
+		"Tau2_0", 33.129, 1e-09, 1e+09, 1, 1
+		"A3", 34.69, 1e-09, 1e+09, 0, 1
+		"Tau3_0", 217.69, 1e-09, 1e+09, 0, 1
+		"Tau1", 2.1343, 1e-09, 1e+09, 1, 1
+		"k0", 6.91721, 1e-09, 1e+09, 1, 1
+		"DELTA", 0.99128, 0, 1, 1, 1
+		"B2", 0.024, 1e-09, 1e+09, 0, 1
+		"B3", 0.01, 1e-09, 1e+09, 0, 1
+End ParmFitness
