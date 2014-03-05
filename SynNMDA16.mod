@@ -151,12 +151,12 @@ STATE {
 }
 
 INITIAL {
-	rates(v)
 	T = 0
 	synon = 0
 	tRel = 0
 	
 	R = 1
+	rates(v,t)
 }
 
 BREAKPOINT {
