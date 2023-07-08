@@ -30,7 +30,7 @@ peak conductance of 1.
 
 In the initial block we initialize the factor and total and A and B to starting values. The factor is 
 defined in terms of tp, a local variable which defined the time of the peak of the function as 
-determined by the tau1 and tau2.  tp is the maximum of the function exp(-t/tau2) – exp(-t/tau1).  To 
+determined by the tau1 and tau2.  tp is the maximum of the function exp(-t/tau2) â€“ exp(-t/tau1).  To 
 verify this for yourself, take the derivative, set it to 0 and solve for t.  The result is tp as defined 
 here. Factor is the value of this function at time tp, and 1/factor is the normalization applied so 
 that the peak is 1.  Then the synaptic weight determines the maximum synaptic conductance.
