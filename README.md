@@ -6,8 +6,8 @@ This is the code that was used by the paper authors.
 
 A sample NMDA model from Exp01-Exp2NMDA-Fitting.hoc is loaded into the NEURON simulator in the auto-launch demo.
 
+## Changelog
+
 20140305 SynNMDA16.mod and SynNMDA16_2.mod were updated to work with a new version of NEURON (hg branch 1027) which also might fix potential initialization problems. The demo results are unchanged.
 
----
-
-2025-07-09: Converted README to Markdown.
+20250709 Converted README to Markdown.
